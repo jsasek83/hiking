@@ -1,6 +1,6 @@
 package com.example.jsasek.mapbox;
 
-import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,7 +15,6 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 public class MainActivity extends AppCompatActivity {
     private MapView mapView;
-    private GPSTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +67,34 @@ public class MainActivity extends AppCompatActivity {
         mapView.onSaveInstanceState(outState);
     }
 
-    public void uiEventReCenter(View v){
+
+    public void uiEventDevMenuView(View v){
+
+        Intent i = new Intent(this, DevMenuActivity.class);
+        startActivityForResult(i, 1);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == MapActivityConstants.MOVE_MAP && data != null) {
+            Double latitude = data.getDoubleExtra(MapActivityConstants.LATITUDE, 0);
+            Double longitude = data.getDoubleExtra(MapActivityConstants.LONGITUDE, 0);
+
+            moveToPosition(latitude, longitude);
+
+        }
+    }
+
+
+    private void moveToPosition(double latitude, double longitude){
 
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
 
                 CameraPosition position = new CameraPosition.Builder()
-                        .target(new LatLng(34.032666, -80.363160))
+                        .target(new LatLng(latitude, longitude))
                         .zoom(12.038777)
                         .build();
 
@@ -88,30 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void uiEventDevMenuView(View v){
 
-        setContentView(R.layout.dev_menu);
-
-
-    }
-
-    public void uiEventMapView(View v){
-
-        setContentView(R.layout.activity_main);
-
-    }
-
-    public void uiEventGetLocation(View v){
-
-
-        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-        if(this.gpsTracker == null){
-            this.gpsTracker = new GPSTracker(getBaseContext());
-        }
-
-        System.out.println(this.gpsTracker.getLocation());
-
-    }
 
 }
