@@ -1,4 +1,4 @@
-package com.example.jsasek.mapbox;
+package com.hikerr.mapbox;
 
 public interface MapActivityConstants {
 
