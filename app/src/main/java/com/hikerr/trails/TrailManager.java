@@ -1,6 +1,7 @@
 package com.hikerr.trails;
 
 import android.location.Location;
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,9 @@ public class TrailManager {
 
 
     public void addLocation(Location location){
+
+        Log.d("TrailManagerAddLocation", "addLocation: " + location);
+
         this.locationList.add(location);
     }
 

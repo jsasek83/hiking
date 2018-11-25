@@ -2,17 +2,17 @@ package com.hikerr.trails;
 
 public class TrailManagerFactory {
 
-    TrailManager instance;
+    private static TrailManager instance;
 
     public static TrailManager getInstance(){
 
-        if (this.instance == null){
+        if (TrailManagerFactory.instance == null){
 
-            this.instance = new TrailManager();
+            TrailManagerFactory.instance = new TrailManager();
 
         }
 
-        return this.instance;
+        return TrailManagerFactory.instance;
 
     }
 

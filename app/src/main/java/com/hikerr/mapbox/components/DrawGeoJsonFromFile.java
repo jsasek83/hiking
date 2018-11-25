@@ -21,12 +21,12 @@ import java.util.List;
 
 public class DrawGeoJsonFromFile extends AsyncTask<Void, Void, List<LatLng>> {
 
-    private final AppCompatActivity activity;
-    private final MapboxMap mapboxMap;
+    private AppCompatActivity activity;
+    private MapboxMap mapboxMap;
 
     private static final String TAG = "DrawGeojsonLineActivity";
 
-    public setComponents(AppCompatActivity activity, MapboxMap mapboxMap){
+    public void setComponents(AppCompatActivity activity, MapboxMap mapboxMap){
         
         this.activity = activity;
         this.mapboxMap = mapboxMap;

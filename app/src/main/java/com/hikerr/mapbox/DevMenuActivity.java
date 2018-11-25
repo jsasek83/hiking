@@ -51,12 +51,7 @@ public class DevMenuActivity extends AppCompatActivity {
 
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        if(this.gpsTracker == null){
-            this.gpsTracker = new GPSTracker(getBaseContext());
-        }
-
-        return this.gpsTracker.getLocation();
-
+        return GPSTracker.getInstance(getBaseContext()).getLastKnownLocation();
 
     }
 
