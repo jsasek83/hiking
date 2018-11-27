@@ -5,12 +5,16 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.example.jsasek.mapbox.R;
 import com.hikerr.mapbox.components.DrawGeoJsonFromList;
 import com.hikerr.trails.TrailManager;
 import com.hikerr.trails.TrailManagerFactory;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -27,6 +31,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         Mapbox.getInstance(this, "pk.eyJ1IjoianNhc2VrIiwiYSI6ImNqbnY0NWR4aDAzZnozeG50aXgzbjFoNGYifQ.p3xESS-zIpp6a2_feGdxNQ");
         setContentView(R.layout.activity_main);
 
@@ -34,6 +45,49 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
+
+
+        SpeedDialView speedDialView = findViewById(R.id.speedDial);
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
+                        .setLabel("Re-Center")
+                        .create()
+        );
+
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.fab_link2, R.drawable.ic_link_white_24dp)
+                        .setLabel("My Trails")
+                        .create()
+        );
+
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.fab_link3, R.drawable.ic_link_white_24dp)
+                        .setLabel("Record")
+                        .create()
+        );
+
+        speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
+            @Override
+            public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
+                switch (speedDialActionItem.getId()) {
+                    case R.id.fab_link:
+                        Log.d("SpeedDialViewListener", "onActionSelected: Test");
+
+                        Location lastKnownLocation = GPSTracker.getInstance(getBaseContext()).getLastKnownLocation();
+                        moveToPosition(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude());
+
+                        return false; // true to keep the Speed Dial open
+                    case R.id.fab_link2:
+                        Log.d("SpeedDialViewListener", "onActionSelected: Test");
+                        return false; // true to keep the Speed Dial open
+                    case R.id.fab_link3:
+                        Log.d("SpeedDialViewListener", "onActionSelected: Test");
+                        return false; // true to keep the Speed Dial open
+                    default:
+                        return false;
+                }
+            }
+        });
 
     }
 

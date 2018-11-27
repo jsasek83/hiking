@@ -1,0 +1,5 @@
+<resources>
+    <item name="fab_link" type="id" />
+    <item name="fab_link2" type="id" />
+    <item name="fab_link3" type="id" />
+</resources>

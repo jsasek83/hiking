@@ -1,9 +1,9 @@
 package com.hikerr.mapbox.components;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
@@ -15,11 +15,11 @@ import java.util.List;
 
 public class DrawGeoJsonFromList extends AsyncTask<Void, Void, List<LatLng>> {
 
-    private AppCompatActivity activity = null;
+    private Activity activity = null;
     private MapboxMap mapboxMap = null;
     private List<Location> locationList = null;
 
-    public void setComponents(AppCompatActivity activity, MapboxMap mapboxMap, List<Location> locationList){
+    public void setComponents(Activity activity, MapboxMap mapboxMap, List<Location> locationList){
         
         this.activity = activity;
         this.locationList = locationList;
